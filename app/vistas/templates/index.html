@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Practica - Compiladores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Limpiador de Gramáticas Libres de Contexto</h1>
+    <form action="{{ url_for('gramatica.ingresar_gramatica') }}" method="POST">
+        <label for="gramatica">Introduce una gramática en BNF:</label><br>
+        <textarea id="gramatica" name="gramatica" rows="10" cols="60" required></textarea><br>
+        <button type="submit">Procesar Gramática</button>
+    </form>
+    {% if resultado %}
+        <hr>
+        <h2>Resultado</h2>
+        {{ resultado|safe }}
+    {% endif %}
+</body>
+</html>
