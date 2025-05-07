@@ -52,4 +52,6 @@ El proyecto está organizado de la siguiente manera:
     ```
     En el navegador: http://127.0.0.1:5000
     ```
+## Se deberá mostrar en terminal esto si compiló con éxito: 
+![image](https://github.com/user-attachments/assets/91dcd0b1-5fbd-494f-8873-8153bd1c4d80)
 
