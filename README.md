@@ -13,6 +13,7 @@ El proyecto está organizado de la siguiente manera:
 - **controlador**: Contiene los controladores de la aplicación.
 
 ## Evidencias de Funcionamiento
+![image](https://github.com/user-attachments/assets/fcaf46ee-9902-4ec6-89d4-1d8249b1f059)
 
 ## Cómo Ejecutar el Proyecto
 
