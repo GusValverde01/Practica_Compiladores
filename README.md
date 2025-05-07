@@ -22,7 +22,7 @@ El proyecto está organizado de la siguiente manera:
    ```
 2. **Abre la terminal y ejecuta el siguiente comando para crear la carpeta venv (entorno virtual) y todo su contenido:**
     ```sh
-    docker-compose up --build
+    python -m venv venv
     ```
 3. **Antes de activar el entorno (solo mientras está abierta la terminal actual) ejecuta:**
     ```sh
