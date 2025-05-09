@@ -1,52 +1,27 @@
 from flask import Blueprint, render_template, request
 from app.modelos.gramatica import Gramatica
 
+# Crea el blueprint para el controlador de gramatica
 gramatica_bp = Blueprint('gramatica', __name__)
 
-@gramatica_bp.route('/', methods=['GET'])
-def index():
-    return render_template('index.html')
-
-@gramatica_bp.route('/procesar', methods=['POST'])
+@gramatica_bp.route('/', methods=['GET', 'POST'])
 def ingresar_gramatica():
-    gramatica = request.form.get('gramatica', '')
-    gr = Gramatica(gramatica)
-    cuadrupla = gr.mostrar_cuadrupla()
-    resultado = f"""
-        <strong>No terminales (N):</strong> {cuadrupla['N']}<br>
-        <strong>Terminales (T):</strong> {cuadrupla['T']}<br>
-        <strong>Producciones (P):</strong> <pre>{cuadrupla['P']}</pre><br>
-        <strong>Símbolo inicial (S):</strong> {cuadrupla['S']}
-    """
+    resultado = None
 
-    clasificacion = gr.clasificar_chomsky()
-    resultado = f"""
-    <strong>No terminales (N):</strong> {cuadrupla['N']}<br>
-    <strong>Terminales (T):</strong> {cuadrupla['T']}<br>
-    <strong>Producciones (P):</strong> <pre>{cuadrupla['P']}</pre><br>
-    <strong>Símbolo inicial (S):</strong> {cuadrupla['S']}<br>
-    <strong>Clasificación (Chomsky):</strong> <span style='color:blue'>{clasificacion}</span>
-    """
+    if request.method == 'POST':
+        gramatica_texto = request.form['gramatica']
+        gr = Gramatica(gramatica_texto)
 
-    return render_template('index.html', resultado=resultado)
+        cuadrupla = gr.mostrar_cuadrupla()
+        clasificacion = gr.clasificacion()
+        vivos = ', '.join(sorted([str(s) for s in gr.simbolos_vivos() if s is not None]))
+        muertos = ', '.join(sorted([str(s) for s in gr.simbolos_muertos() if s is not None]))
+        accesibles = ', '.join(sorted([str(s) for s in gr.simbolos_accesibles() if s is not None]))
+        inaccesibles = ', '.join(sorted([str(s) for s in gr.simbolos_inaccesibles() if s is not None]))
+        reglas_eliminadas = gr.reglas_eliminadas()
+        cuadrupla_final = gr.mostrar_cuadrupla_final()
 
-#Se mostraran los resultados en los metodos de limpieza 
-@gramatica_bp.route('/procesar', methods=['POST'], endpoint='procesar_gramatica')
-def ingresar_gramatica():
-    gramatica = request.form.get('gramatica', '')
-    gr = Gramatica(gramatica)
-    cuadrupla = gr.mostrar_cuadrupla()
-    clasificacion = gr.clasificar_chomsky()
-
-    vivos, muertos = gr.simbolos_vivos_muertos()
-    accesibles, inaccesibles = gr.simbolos_accesibles_inaccesibles()
-    reglas_eliminadas = ""
-    if clasificacion in ["Tipo 2 (Gramática Libre de Contexto)", "Tipo 3 (Gramática Regular)"]:
-        reglas_eliminadas = gr.limpiar()  # Realiza la limpieza solo si es tipo 2 o 3
-
-    cuadrupla_final = gr.mostrar_cuadrupla()
-
-    resultado = f"""
+        resultado = f"""
         <strong>No terminales (N):</strong> {cuadrupla['N']}<br>
         <strong>Terminales (T):</strong> {cuadrupla['T']}<br>
         <strong>Producciones (P):</strong> <pre>{cuadrupla['P']}</pre><br>
@@ -64,5 +39,6 @@ def ingresar_gramatica():
         Terminales: {cuadrupla_final['T']}<br>
         Producciones: <pre>{cuadrupla_final['P']}</pre><br>
         Símbolo inicial: {cuadrupla_final['S']}
-    """
+        """
+
     return render_template('index.html', resultado=resultado)
