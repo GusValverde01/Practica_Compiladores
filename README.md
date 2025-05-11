@@ -1,8 +1,8 @@
 # Práctica de Compiladores
-## Segundo parcial || Práctica uno
 ### Limpiador de grámaticas libres de contexto 
 
 **Camacho Zavala Ricardo**
+
 **Valverde Rojas Gustavo**
 
 Esta práctica tuvo como finalidad desarrollar una aplicación capaz de limpiar gramáticas libres de contexto clasificadas como tipo 2 (o tipo 3) de acuerdo con la jerarquía de Chomsky y fue desarrollado con el framework flask.
@@ -19,11 +19,13 @@ El proyecto está organizado de la siguiente manera:
 
 ## Evidencias de Funcionamiento
 interfaz de inicio
-![image](https://github.com/user-attachments/assets/fcaf46ee-9902-4ec6-89d4-1d8249b1f059)
+![Captura de pantalla 2025-05-11 011004](https://github.com/user-attachments/assets/320b1275-8ec5-4876-b486-3010bb30c248)
 
 agregar grámatica
+![Captura de pantalla 2025-05-11 011121](https://github.com/user-attachments/assets/c6943d74-4278-444f-8964-c0de9529310a)
 
 limpieza de grámatica 
+![Captura de pantalla 2025-05-11 011430](https://github.com/user-attachments/assets/c7dee773-ee31-40a8-8dbf-693aa0807a01)
 
 ## Intrucciones de ejecución
 
@@ -31,23 +33,23 @@ limpieza de grámatica
    ```sh
    git clone https://github.com/GusValverde01/Practica_Compiladores.git
    ```
-2. **Abre la terminal y ejecuta el siguiente comando para crear la carpeta venv (entorno virtual) y todo su contenido:**
+2. **Abrir la terminal y ejecutar el siguiente comando para crear la carpeta venv (entorno virtual) y todo su contenido:**
     ```sh
     python -m venv venv
     ```
-3. **Antes de activar el entorno (solo mientras está abierta la terminal actual) ejecuta:**
+3. **Antes de activar el entorno (solo mientras está abierta la terminal actual) ejecutar:**
     ```sh
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
     ```
-4.  **Cuando te pregunte si deseas cambiar la directiva, responde: Si no es el caso, ignora esto**
+4.  **Cuando pregunte si deseas cambiar la directiva, responde: Si no es el caso, ignorar esto**
     ```sh
     S
     ```
-5.  **Luego activa el entorno virtual:**
+5.  **Luego activar el entorno virtual:**
     ```sh
     .\venv\Scripts\Activate.ps1
     ```
-## En caso de no tener Flask instalado sigue este paso con el entorno virtual activado:
+## En caso de no tener Flask instalado seguir este paso con el entorno virtual activado:
 
 - **Instalar Flask:**
    ```sh
@@ -68,4 +70,4 @@ limpieza de grámatica
 
 ## Errores conocidos 
 
-**Al no tener una versión de Python agregada en el path o en el control de versiones no puede se puede ejecutar el proyecto**
+**Al no tener una versión de Python agregada en el path o en el control de versiones no se puede ejecutar el proyecto, se recomienda tener la version de python 3.13 o superior ya que en esta versión fue desarrollado**
