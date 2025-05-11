@@ -1,6 +1,11 @@
-# Practica de Compiladores
+# Práctica de Compiladores
+## Segundo parcial || Práctica uno
+### Limpiador de grámaticas libres de contexto 
 
-Esta practica tuvo como finalidad desarrollar una aplicación capaz de limpiar gramáticas libres de contexto clasificadas como tipo 2 (o tipo 3) de acuerdo con la jerarquía de Chomsky. Fue desarrollado con el framework de flask.
+**Camacho Zavala Ricardo**
+**Valverde Rojas Gustavo**
+
+Esta práctica tuvo como finalidad desarrollar una aplicación capaz de limpiar gramáticas libres de contexto clasificadas como tipo 2 (o tipo 3) de acuerdo con la jerarquía de Chomsky y fue desarrollado con el framework flask.
 
 ## Estructura del Proyecto
 
@@ -13,9 +18,14 @@ El proyecto está organizado de la siguiente manera:
 - **controlador**: Contiene los controladores de la aplicación.
 
 ## Evidencias de Funcionamiento
+interfaz de inicio
 ![image](https://github.com/user-attachments/assets/fcaf46ee-9902-4ec6-89d4-1d8249b1f059)
 
-## Cómo Ejecutar el Proyecto
+agregar grámatica
+
+limpieza de grámatica 
+
+## Intrucciones de ejecución
 
 1. **Clonar el repositorio:**
    ```sh
@@ -55,3 +65,7 @@ El proyecto está organizado de la siguiente manera:
 ## Se deberá mostrar en terminal esto si compiló con éxito: 
 ![image](https://github.com/user-attachments/assets/91dcd0b1-5fbd-494f-8873-8153bd1c4d80)
 
+
+## Errores conocidos 
+
+**Al no tener una versión de Python agregada en el path o en el control de versiones no puede se puede ejecutar el proyecto**
