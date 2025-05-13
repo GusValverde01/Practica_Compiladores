@@ -43,13 +43,13 @@ El proyecto sigue una estructura tipica de Flask, está organizado de la siguien
     ```sh
     .\venv\Scripts\Activate.ps1
     ```
-## En caso de no tener Flask instalado seguir este paso con el entorno virtual activado:
+### En caso de no tener Flask instalado seguir este paso con el entorno virtual activado:
 
 - **Instalar Flask:**
    ```sh
    pip install flask
    ```
-## Continuando con la ejecución:
+### Continuando con la ejecución:
 6. **En la terminal (aún con (venv) activo), corre la aplicación con:**
     ```sh
     python run.py
@@ -76,4 +76,11 @@ Limpieza de grámatica
 
 Al no tener una versión de Python agregada en el path o en el control de versiones no se puede ejecutar el proyecto, se recomienda tener la version de python 3.13 o superior ya que en esta versión fue desarrollado
 
-**En caso de no tener agregado en el path la versión de python, se explica a continuación**
+**En caso de no tener agregado en el path la versión de python, se explica a continuación:**
+1. Buscar en el buscador de windows "path" o "control de versiones"
+   ![Captura de pantalla 2025-05-13 013019](https://github.com/user-attachments/assets/647a16d8-79a8-4473-b926-c2762042a28d)
+2. En el menú que aparecío, selecciona "variables de entorno", es el último boton
+   ![Captura de pantalla 2025-05-13 013121](https://github.com/user-attachments/assets/d145ef3a-5d6c-4ec1-ad94-986949dfd0f0)
+3. Por último, en caso de no tener la versión agregada en el path, hazlo dando click en "nueva", tendrás que seleccionar la ruta donde tengas instalado python
+   ![Captura de pantalla 2025-05-13 013202](https://github.com/user-attachments/assets/26f59e0e-5fb9-434d-b097-4e8fa21eb44f)
+4. En caso de que esto no funcione, deberás instalar de nuevo python, y durante la instalación selecciona que agregue las variables directo al path
