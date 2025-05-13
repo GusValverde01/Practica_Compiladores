@@ -3,21 +3,22 @@ import re
 class Gramatica:
     def __init__(self, gramatica_texto):
         self.gramatica_texto = gramatica_texto
-        self.N = set()
-        self.T = set()
-        self.P = dict()
-        self.S = None
+        self.N = set() # Conjunto de no terminales (N)
+        self.T = set() # Conjunto de terminales (T)
+        self.P = dict() # Diccionario de producciones (P)
+        self.S = None  # Símbolo inicial (S)
         self.parsear_gramatica()
 
     def parsear_gramatica(self):
-        # Handle BNF format like <S> ::= a<A> | b
+        # maneja el formato BNF
         lines = self.gramatica_texto.strip().split('\n')
         for linea in lines:
             if '::=' not in linea:
                 continue
             izq, der = [x.strip() for x in linea.split('::=')]
-            # Remove angle brackets from non-terminal
+            # Remueve los '<>' del no terminal
             izq = izq.strip('<>')
+            # Establece el primer no terminal como símbolo inicial
             if not self.S:
                 self.S = izq
             self.N.add(izq)
@@ -25,10 +26,10 @@ class Gramatica:
             if izq not in self.P:
                 self.P[izq] = []
             for prod in producciones:
-                # Process each production, handling grouped notations like [a-z]
+                # Procesa cada producción, manejando notaciones como [a-z]
                 symbols = self.parse_production(prod)
                 self.P[izq].append(symbols)
-        # Detect terminals
+        # Detecta terminales (símbolos no en N y distintos de ε)
         for der in self.P.values():
             for prod in der:
                 for simb in prod:
@@ -36,19 +37,19 @@ class Gramatica:
                         self.T.add(simb)
 
     def parse_production(self, prod):
-        # Parse a production, expanding grouped notations like [a-z]
+        # Procesa una producción, expandiendo notaciones como [a-z]
         symbols = []
         i = 0
         while i < len(prod):
             if prod[i] == '<':
-                # Non-terminal
+                # No terminales
                 end = prod.find('>', i)
                 if end == -1:
                     break
                 symbols.append(prod[i+1:end])
                 i = end + 1
             elif prod[i] == '[':
-                # Grouped notation like [a-z] or [0-9]
+                # Maneja notaciones de grupo como [a-z] o [0-9]
                 end = prod.find(']', i)
                 if end == -1:
                     break
@@ -56,20 +57,21 @@ class Gramatica:
                 if '-' in group:
                     start, end_char = group.split('-')
                     if start.isalpha() and end_char.isalpha():
-                        # Expand letters, e.g., [a-z]
+                        # Expande letras, e.j., [a-z]
                         symbols.extend(chr(c) for c in range(ord(start.lower()), ord(end_char.lower()) + 1))
                     elif start.isdigit() and end_char.isdigit():
-                        # Expand digits, e.g., [0-9]
+                        # Expande digitos, e.j., [0-9]
                         symbols.extend(str(c) for c in range(int(start), int(end_char) + 1))
                 i = end + 1
             else:
-                # Single terminal
+                # Símbolo terminal individual
                 if prod[i].strip():
                     symbols.append(prod[i])
                 i += 1
-        return symbols if symbols else ['ε']  # Empty production is epsilon
+        return symbols if symbols else ['ε']  # Si la producción está vacía, retorna epsilon
 
     def mostrar_cuadrupla(self):
+        # Devuelve la cuádrupla como diccionario
         return {
             "N": ', '.join(sorted(self.N)),
             "T": ', '.join(sorted(self.T)),
@@ -78,6 +80,7 @@ class Gramatica:
         }
 
     def formatear_producciones(self, producciones):
+        # Formatea las producciones como texto legible
         txt = ""
         for izq in producciones:
             derechos = [" ".join(prod) if prod != ['ε'] else "ε" for prod in producciones[izq]]
@@ -85,6 +88,7 @@ class Gramatica:
         return txt.strip()
 
     def clasificacion(self):
+        # Determina si la gramática es Tipo 2 (libre de contexto) o Tipo 3 (regular)
         es_libre_contexto = True
         es_regular = True
 
@@ -120,6 +124,7 @@ class Gramatica:
             return "No es Tipo 2 ni Tipo 3"
 
     def simbolos_vivos(self):
+        # Calcula los símbolos no terminales que generan cadenas terminales
         vivos = set()
         while True:
             nuevos = set()
@@ -134,9 +139,11 @@ class Gramatica:
         return vivos
 
     def simbolos_muertos(self):
+        # Devuelve los no terminales que no generan cadenas terminales
         return self.N - self.simbolos_vivos()
 
     def simbolos_accesibles(self):
+        # Calcula los no terminales alcanzables desde el símbolo inicial
         accesibles = set([self.S])
         while True:
             nuevos = set()
@@ -151,15 +158,18 @@ class Gramatica:
         return accesibles
 
     def simbolos_inaccesibles(self):
+        # Devuelve los no terminales no alcanzables
         return self.N - self.simbolos_accesibles()
 
     def reglas_eliminadas(self):
+        # Simplifica la gramática eliminando símbolos muertos e inaccesibles
         vivos = self.simbolos_vivos()
         accesibles = self.simbolos_accesibles()
         limpiar = vivos & accesibles
 
         reglas_eliminadas = []
         nuevas_P = dict()
+        # Conserva solo las reglas con no terminales vivos y accesibles
         for nt in limpiar:
             prod_limpias = []
             for prod in self.P[nt]:
@@ -169,10 +179,12 @@ class Gramatica:
                     reglas_eliminadas.append(f"{nt} -> {' '.join(prod)}")
             if prod_limpias:
                 nuevas_P[nt] = prod_limpias
-
+        
+        # Agrega reglas eliminadas de no terminales no vivos/accesibles
         for nt in (self.N - limpiar):
             for prod in self.P.get(nt, []):
                 reglas_eliminadas.append(f"{nt} -> {' '.join(prod)}")
+        # Actualiza las producciones limpias
         self.P_limpia = nuevas_P
         self.N_limpia = set(nuevas_P.keys())
         self.T_limpia = set()
@@ -184,6 +196,7 @@ class Gramatica:
         return "\n".join(reglas_eliminadas)
 
     def mostrar_cuadrupla_final(self):
+        # Devuelve la cuádrupla de la gramática simplificada
         self.reglas_eliminadas()
         return {
             "N": ', '.join(sorted(self.N_limpia)),

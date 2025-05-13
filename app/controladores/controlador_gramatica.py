@@ -4,14 +4,17 @@ from app.modelos.gramatica import Gramatica
 # Crea el blueprint para el controlador de gramatica
 gramatica_bp = Blueprint('gramatica', __name__)
 
+# Define la ruta raíz ('/') que acepta métodos GET y POST
 @gramatica_bp.route('/', methods=['GET', 'POST'])
 def ingresar_gramatica():
     resultado = None
 
+    # Si la solicitud es POST (el usuario envió el formulario)
     if request.method == 'POST':
         gramatica_texto = request.form['gramatica']
         gr = Gramatica(gramatica_texto)
 
+        # requerimientos de la practica 
         cuadrupla = gr.mostrar_cuadrupla()
         clasificacion = gr.clasificacion()
         vivos = ', '.join(sorted([str(s) for s in gr.simbolos_vivos() if s is not None]))
@@ -21,6 +24,7 @@ def ingresar_gramatica():
         reglas_eliminadas = gr.reglas_eliminadas()
         cuadrupla_final = gr.mostrar_cuadrupla_final()
 
+        # Formatea los resultados como una cadena HTML para mostrar en la plantilla
         resultado = f"""
         <strong>No terminales (N):</strong> {cuadrupla['N']}<br>
         <strong>Terminales (T):</strong> {cuadrupla['T']}<br>
